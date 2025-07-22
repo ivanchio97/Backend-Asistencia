@@ -101,7 +101,11 @@ app.post('/api/login', authLimiter, async (req,res) => {
 
 app.post('/api/logout',(req,res)=>{
     try{
-        res.clearCookie('token');
+        res.clearCookie('token',{
+            httpOnly:true,
+            secure:true,
+            sameSite:"None"
+        });
         res.status(200).send("Sesión cerrada")
     }catch(err){
         res.status(400).json({mensaje:"Error al iniciar sesión"})
